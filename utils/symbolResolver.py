@@ -1,15 +1,9 @@
-from utils.ATTASMSyntax import *
 from utils.Exceptions import *
 
 def SymbolScanner(assembleCode, symbolTable):
-    curFunctionStr = None
     for assembleLine in assembleCode:
         if not assembleLine.startswith('.') and assembleLine.endswith(":"):
-            curFunctionStr = assembleLine[:-1]
-            continue
-        if assembleLine == ASMFunctionStart:
-            symbolTable.append(curFunctionStr)
-            continue
+            symbolTable.append(assembleLine[:-1])
 
 def BondMapInserter(symbolTable, bondMap, caller, callee):
     if not symbolTable.count(caller) or not symbolTable.count(callee):
@@ -26,20 +20,13 @@ def BondMapInserter(symbolTable, bondMap, caller, callee):
 
 def BondResolver(assembleCode, symbolTable, bondMap):
     curFunctionStr = None
-    inFunction = False
     for assembleLine in assembleCode:
         if not assembleLine.startswith('.') and assembleLine.endswith(":"):
             curFunctionStr = assembleLine[:-1]
             continue
-        if assembleLine == ASMFunctionStart:
-            inFunction = True
-            continue
-        if assembleLine == ASMFunctionEnd:
-            inFunction = False
-            continue
         instruction = assembleLine.split("\t")
         if instruction[0].lower() == 'call':
-            if curFunctionStr is not None and inFunction:
+            if curFunctionStr is not None:
                 if not symbolTable.count(instruction[1]):
                     symbolTable.append(instruction[1])
                 BondMapInserter(symbolTable,bondMap,curFunctionStr,instruction[1])

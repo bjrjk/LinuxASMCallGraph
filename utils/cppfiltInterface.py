@@ -14,7 +14,7 @@ def strFilter(str):
 
 def isPLT(assembleFuncName):
     assembleFuncName = strFilter(assembleFuncName)
-    return assembleFuncName.endswith("@PLT")
+    return assembleFuncName.endswith("@PLT") or assembleFuncName == '__main'
 
 
 def isNotSTL(assembleFuncName):
