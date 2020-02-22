@@ -18,7 +18,8 @@ pip3 install pygraphviz
 ```
 
 ### Usage
-##### Current Version: 1.1
+##### Current Version: 1.2
+##### Please generate your assembly file in Linux OS to get a better results.
 Use ```gcc -S [Your C Filename]``` or ```g++ -S [Your CPP Filename]``` to generate the assembly code for your high level programming language. 
 
 And then place your assembly file under the software root directory.
@@ -37,6 +38,8 @@ Options:
 --enable-stl:   Draw Call Graphs of C++ Standard Library.(Default Disabled)
 --enable-plt:   Draw Call Graphs of External Functions like puts and printf in libc.(Default Disabled)
 ```
+### Examples
+[Examples->README.md](https://github.com/bjrjk/LinuxASMCallGraph/blob/master/examples/README.md)
 
 ### About
 This project will improve continuously. 
