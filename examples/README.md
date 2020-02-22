@@ -1,6 +1,6 @@
 ### Examples
 1.c:
-```
+```c
 #include<stdio.h>
 void Fun3(){
 	
@@ -18,10 +18,11 @@ int main(){
 }
 ```
 1.png:
+
 ![1.png](https://raw.githubusercontent.com/bjrjk/LinuxASMCallGraph/master/examples/1.png)
 
 greedy.cpp:
-```
+```cpp
 #include<cstdio>
 #include<stack>
 #include<vector>
@@ -63,4 +64,5 @@ int main() {
 }
 ```
 greedy.png:
+
 ![greedy.png](https://raw.githubusercontent.com/bjrjk/LinuxASMCallGraph/master/examples/greedy.png)
