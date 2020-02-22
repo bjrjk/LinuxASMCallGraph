@@ -18,13 +18,25 @@ pip3 install pygraphviz
 ```
 
 ### Usage
-Use ```gcc -S [Your C Filename]``` or ```g++ -S [Your CPP Filename]``` to generate the assembly code for your high level programming language. And then rename your assembly file to ```Main.s``` and place it under the software root directory.
+##### Current Version: 1.1
+Use ```gcc -S [Your C Filename]``` or ```g++ -S [Your CPP Filename]``` to generate the assembly code for your high level programming language. 
+
+And then place your assembly file under the software root directory.
 
 Then command:
 ```
-python3 CallGraph.py
+python3 CallGraph.py [FileName.s]
 ```
-Generated Call Graph will be saved in ```result.png```.
+Generated Call Graph will be saved in ```[FileName.png]```.
+
+Other Options:
+```
+Usage: python3 CallGraph.py [--help] [--enable-stl] [--enable-plt] filename.s
+Options:
+--help: Show this help information.
+--enable-stl:   Draw Call Graphs of C++ Standard Library.(Default Disabled)
+--enable-plt:   Draw Call Graphs of External Functions like puts and printf in libc.(Default Disabled)
+```
 
 ### About
 This project will improve continuously. 
