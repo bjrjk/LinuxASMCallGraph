@@ -13,7 +13,7 @@ gcc, g++, c++filt (GNU compiler collection)
 How to install in Debian/Ubuntu:
 ```
 sudo apt update
-sudo apt install python3-dev graphviz-dev python3-pip gcc g++
+sudo apt install python3-dev graphviz-dev graphviz python3 python3-pip gcc g++
 pip3 install pygraphviz
 ```
 
