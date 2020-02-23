@@ -1,4 +1,11 @@
 <?php
+function printArray($arr){
+    $len = count($arr);
+    for($i=0;$i<$len;$i++){
+        echo $arr[$i];
+        echo "\n<br>\n";
+    }
+}
 if (isset($_FILES["file"])) {
     if ($_FILES["file"]["error"] > 0)
         die("Error:" . $_FILES["file"]["error"]);
@@ -21,21 +28,26 @@ if (isset($_FILES["file"])) {
         $command = "g++ -S \"$fullName.$extension\" -o \"$fullName.s\" 2>&1";
         exec($command,$message,$retCode);
         if($retCode != 0){
-            var_dump($message);
+            printArray($message);
             die("g++ compiler error!");
         }
         $command = "python3 \"$scriptDirName\" \"$fullName.s\"" . ($STL?" --enable-stl ":"") . ($PLT?" --enable-plt ":"") . " 2>&1";
         exec($command,$message,$retCode);
         if($retCode != 0){
-            var_dump($message);
+            printArray($message);
             die("Script execution error!");
         }
         header("Location:  tmp/$fileMD5.png");
     } else {
+        $command = "unzip -l \"$fullName.zip\" | grep php 2>&1";
+        exec($command,$message,$retCode);
+        if(count($message)){
+            die("Don't try to do bad things!");
+        }
         $command = "unzip \"$fullName.zip\" -d \"$fullName\" 2>&1";
         exec($command,$message,$retCode);
         if($retCode != 0){
-            var_dump($message);
+            printArray($message);
             die("unzip error!");
         }
         if (file_exists($fullName . '/main.cpp')) $extension = 'cpp';
@@ -44,14 +56,14 @@ if (isset($_FILES["file"])) {
         $command = "g++ -S \"$fullName/main.$extension\" -o \"$fullName/main.s\" 2>&1";
         exec($command,$message,$retCode);
         if($retCode != 0){
-            var_dump($message);
+            printArray($message);
             die("g++ compiler error!");
         }
         $command = "python3 \"$scriptDirName\" \"$fullName/main.s\"" . ($STL?" --enable-stl ":"") . ($PLT?" --enable-plt ":"") . " 2>&1";
         echo $command;
         exec($command,$message,$retCode);
         if($retCode != 0){
-            var_dump($message);
+            printArray($message);
             die("Script execution error!");
         }
         header("Location:  tmp/$fileMD5/main.png");
