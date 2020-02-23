@@ -29,7 +29,7 @@ def Main(fileName,STLFlag,PLTFlag):
     global assembleCode
     Input(fileName)
     Build()
-    name = fileName.split(".")[0]
+    name = fileName[:-2]
     Generation(name+".json")
     DrawPic(name+".json",name+".png",PLTFlag,STLFlag)
 
@@ -44,6 +44,7 @@ if __name__ == '__main__':
     argc = len(sys.argv)
     if argc < 2 or "--help" in sys.argv:
         Help()
+        exit(1)
     else:
         STLFlag = False
         PLTFlag = False
@@ -57,5 +58,7 @@ if __name__ == '__main__':
         if fileName == None:
             print("Incorrect Input.")
             Help()
+            exit(1)
         else:
             Main(fileName,STLFlag,PLTFlag)
+            exit(0)
