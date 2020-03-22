@@ -44,6 +44,13 @@ Options:
 ### Online Call Graph Generator
 You may visit [here](http://linuxasmcallgraph.tool.renjikai.com/) .
 
+### Deploy from Docker
+```
+git clone https://github.com/bjrjk/LinuxASMCallGraph.git
+cd LinuxASMCallGraph
+docker-compose up
+```
+
 ### About
 This project will improve continuously. 
 

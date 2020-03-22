@@ -1,0 +1,6 @@
+version: '2'
+services:
+  linuxasmcallgraph:
+    build: .
+    ports:
+      - "7777:80"

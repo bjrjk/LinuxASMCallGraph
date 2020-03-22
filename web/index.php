@@ -1,4 +1,5 @@
 <?php
+putenv('PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games');
 if (isset($_FILES["file"])) {
     if ($_FILES["file"]["error"] > 0)
         die("Error:" . $_FILES["file"]["error"]);
@@ -49,7 +50,6 @@ if (isset($_FILES["file"])) {
             die("g++ compiler error!");
         }
         $command = "python3 \"$scriptDirName\" \"$fullName/main.s\"" . ($STL?" --enable-stl ":"") . ($PLT?" --enable-plt ":"") . " 2>&1";
-        echo $command;
         exec($command,$message,$retCode);
         if($retCode != 0){
             die("Script execution error!");
