@@ -42,7 +42,7 @@ Options:
 [Examples->README.md](https://github.com/bjrjk/LinuxASMCallGraph/blob/master/examples/README.md)
 
 ### Online Call Graph Generator
-You may visit [here](http://linuxasmcallgraph.tool.renjikai.com/) .
+You may visit [here](http://linuxasmcallgraph.renjikai.com/) .
 
 ### Deploy from Docker
 ```
