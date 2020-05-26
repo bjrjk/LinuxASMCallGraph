@@ -1,5 +1,3 @@
-from utils.Exceptions import *
-
 def SymbolScanner(assembleCode, symbolTable):
     for assembleLine in assembleCode:
         if not assembleLine.startswith('.') and assembleLine.endswith(":"):
