@@ -1,7 +1,8 @@
-import json, sys
-from CallGraph.utils import symbolResolver
-from CallGraph.CallGraphDepicter import DrawPic
 import argparse
+import json
+
+from CallGraph.CallGraphDepicter import DrawPic
+from CallGraph.utils import symbolResolver
 
 assembleCode = []
 symbolTable = []
