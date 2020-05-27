@@ -24,7 +24,7 @@ if (isset($_FILES["file"])) {
         if($retCode != 0){
             die("g++ compiler error!");
         }
-        $command = "python3 \"$scriptDirName\" \"$fullName.s\"" . ($STL?" --enable-stl ":"") . ($PLT?" --enable-plt ":"") . " 2>&1";
+        $command = "callgraph -f \"$fullName.s\"" . ($STL?" --enable-stl ":"") . ($PLT?" --enable-plt ":"") . " 2>&1";
         exec($command,$message,$retCode);
         if($retCode != 0){
             die("Script execution error!");
@@ -49,7 +49,7 @@ if (isset($_FILES["file"])) {
         if($retCode != 0){
             die("g++ compiler error!");
         }
-        $command = "python3 \"$scriptDirName\" \"$fullName/main.s\"" . ($STL?" --enable-stl ":"") . ($PLT?" --enable-plt ":"") . " 2>&1";
+        $command = "callgraph -f \"$fullName/main.s\"" . ($STL?" --enable-stl ":"") . ($PLT?" --enable-plt ":"") . " 2>&1";
         exec($command,$message,$retCode);
         if($retCode != 0){
             die("Script execution error!");
@@ -82,7 +82,7 @@ if (isset($_FILES["file"])) {
 	<div class="alert alert-warning" role="alert">
 		Compiler Command: g++ --std=c++17 -S main.cpp -o main.s
 		<br>
-		For security resaons, g++ compiler error log won't show in the result page if your program has a syntax error. Please try with the above command in your local LINUX machine to find out where the error is located and what it is in order to fix it.
+		For security reasons, g++ compiler error log won't show in the result page if your program has a syntax error. Please try with the above command in your local LINUX machine to find out where the error is located and what it is in order to fix it.
 		<br>
 		If you encountered any problem in the usage, please click the copyright information hyperlink to open an issue. The repo's maintainer is glad to solve your problem.
 	</div>

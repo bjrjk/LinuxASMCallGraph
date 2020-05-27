@@ -14,7 +14,8 @@ How to install in Debian/Ubuntu:
 ```
 sudo apt update
 sudo apt install python3-dev graphviz-dev graphviz python3 python3-pip gcc g++
-pip3 install pygraphviz
+sudo pip3 install pygraphviz
+sudo python3 setup.py install
 ```
 
 ### Usage
@@ -22,21 +23,23 @@ pip3 install pygraphviz
 ##### Please generate your assembly file in Linux OS to get a better results.
 Use ```gcc -S [Your C Filename]``` or ```g++ -S [Your CPP Filename]``` to generate the assembly code for your high level programming language. 
 
-And then place your assembly file under the software root directory.
-
 Then command:
 ```
-python3 CallGraph.py [FileName.s]
+callgraph -f [FileName.s]
 ```
 Generated Call Graph will be saved in ```[FileName.png]```.
 
 Other Options:
 ```
-Usage: python3 CallGraph.py [--help] [--enable-stl] [--enable-plt] filename.s
-Options:
---help: Show this help information.
---enable-stl:   Draw Call Graphs of C++ Standard Library.(Default Disabled)
---enable-plt:   Draw Call Graphs of External Functions like puts and printf in libc.(Default Disabled)
+usage: callgraph [options] -f <file>
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --enable-stl, -stl    Draw Call Graphs of C++ Standard Library.
+  --enable-plt, -plt    Draw Call Graphs of External Functions like puts and
+                        printf in libc.
+  --file filename.s, -f filename.s
+                        Assembly File Name.
 ```
 ### Examples
 [Examples->README.md](https://github.com/bjrjk/LinuxASMCallGraph/blob/master/examples/README.md)

@@ -5,6 +5,7 @@ RUN pip3 install pygraphviz
 WORKDIR /var/www/html
 RUN rm -rf *
 COPY ./ /var/www/html
+RUN python3 setup.py install
 RUN mv web/index.php .
 RUN mkdir tmp
 RUN chown -R www-data:www-data /var/www/html
