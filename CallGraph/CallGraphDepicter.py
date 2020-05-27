@@ -24,7 +24,7 @@ def Drawer(entryPoint, symbolTable, bondMap, picName, DrawPLTFlag, DrawSTLFlag):
             if not DrawPLTFlag and isPLT(symbolTable[calleeID]) or not DrawSTLFlag and isNotSTL(symbolTable[calleeID]):
                 continue
             g.add_edge(getOriginFuncName(symbolTable[callerID]), getOriginFuncName(symbolTable[calleeID]))
-            if not calleeID in visited:
+            if calleeID not in visited:
                 q.push(calleeID)
     g.layout(prog='dot')
     g.draw(picName)
