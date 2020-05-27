@@ -24,7 +24,7 @@ if (isset($_FILES["file"])) {
         if($retCode != 0){
             die("g++ compiler error!");
         }
-        $command = "callgraph -f \"$scriptDirName\" \"$fullName.s\"" . ($STL?" --enable-stl ":"") . ($PLT?" --enable-plt ":"") . " 2>&1";
+        $command = "callgraph -f \"$fullName.s\"" . ($STL?" --enable-stl ":"") . ($PLT?" --enable-plt ":"") . " 2>&1";
         exec($command,$message,$retCode);
         if($retCode != 0){
             die("Script execution error!");
@@ -49,7 +49,7 @@ if (isset($_FILES["file"])) {
         if($retCode != 0){
             die("g++ compiler error!");
         }
-        $command = "callgraph -f \"$scriptDirName\" \"$fullName/main.s\"" . ($STL?" --enable-stl ":"") . ($PLT?" --enable-plt ":"") . " 2>&1";
+        $command = "callgraph -f \"$fullName/main.s\"" . ($STL?" --enable-stl ":"") . ($PLT?" --enable-plt ":"") . " 2>&1";
         exec($command,$message,$retCode);
         if($retCode != 0){
             die("Script execution error!");
