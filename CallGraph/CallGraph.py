@@ -49,7 +49,7 @@ def Main():
     STLFlag = args.stl is not False
     fileName: str = args.file
     if not fileName.lower().endswith('.s'):
-        Help()
+        Help(fileName)
         exit(1)
     Input(fileName)
     Build()
@@ -59,7 +59,8 @@ def Main():
 
 
 
-def Help():
+def Help(fileName):
+    print('Filename should end with \'.s\'. Your filename is: {}'.format(fileName))
     parser.print_help()
 
 
