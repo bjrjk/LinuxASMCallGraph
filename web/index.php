@@ -19,12 +19,12 @@ if (isset($_FILES["file"])) {
     $STL = isset($_POST['STL']);
     $PLT = isset($_POST['PLT']);
     if ($extension != "zip") {
-        $command = "g++ -S \"$fullName.$extension\" -o \"$fullName.s\" 2>&1";
+        $command = "g++ --std=c++17 -S \"$fullName.$extension\" -o \"$fullName.s\" 2>&1";
         exec($command,$message,$retCode);
         if($retCode != 0){
             die("g++ compiler error!");
         }
-        $command = "python3 \"$scriptDirName\" \"$fullName.s\"" . ($STL?" --enable-stl ":"") . ($PLT?" --enable-plt ":"") . " 2>&1";
+        $command = "callgraph -f \"$fullName.s\"" . ($STL?" --enable-stl ":"") . ($PLT?" --enable-plt ":"") . " 2>&1";
         exec($command,$message,$retCode);
         if($retCode != 0){
             die("Script execution error!");
@@ -44,12 +44,12 @@ if (isset($_FILES["file"])) {
         if (file_exists($fullName . '/main.cpp')) $extension = 'cpp';
         else if (file_exists($fullName . '/main.c')) $extension = 'c';
         else die("No entrypoint file named main.c/main.cpp! Please check!");
-        $command = "g++ -S \"$fullName/main.$extension\" -o \"$fullName/main.s\" 2>&1";
+        $command = "g++ --std=c++17 -S \"$fullName/main.$extension\" -o \"$fullName/main.s\" 2>&1";
         exec($command,$message,$retCode);
         if($retCode != 0){
             die("g++ compiler error!");
         }
-        $command = "python3 \"$scriptDirName\" \"$fullName/main.s\"" . ($STL?" --enable-stl ":"") . ($PLT?" --enable-plt ":"") . " 2>&1";
+        $command = "callgraph -f \"$fullName/main.s\"" . ($STL?" --enable-stl ":"") . ($PLT?" --enable-plt ":"") . " 2>&1";
         exec($command,$message,$retCode);
         if($retCode != 0){
             die("Script execution error!");
@@ -79,6 +79,13 @@ if (isset($_FILES["file"])) {
         <br>
         File size must be less than 1MB.
     </div>
+	<div class="alert alert-warning" role="alert">
+		Compiler Command: g++ --std=c++17 -S main.cpp -o main.s
+		<br>
+		For security reasons, g++ compiler error log won't show in the result page if your program has a syntax error. Please try with the above command in your local LINUX machine to find out where the error is located and what it is in order to fix it.
+		<br>
+		If you encountered any problem in the usage, please click the copyright information hyperlink to open an issue. The repo's maintainer is glad to solve your problem.
+	</div>
     <form method="post" enctype="multipart/form-data" role="form">
         <div class="checkbox">
             <label><input type="checkbox" class="form-control" name="STL">Enable STL</label>
