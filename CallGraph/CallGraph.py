@@ -7,12 +7,13 @@ assembleCode = []
 symbolTable = []
 bondMap = {}
 
-parser = argparse.ArgumentParser(usage='%(prog)s [options] <file>')
-parser.add_argument('--enable-stl', '-stl', dest='stl', type=bool, default=False, required=False, nargs="?",
+parser = argparse.ArgumentParser(usage='%(prog)s [options] -f <file>')
+parser.add_argument('--enable-stl', '-stl', action="store_true", dest='stl', default=False, required=False, 
                     help='Draw Call Graphs of C++ Standard Library.')
-parser.add_argument('--enable-plt', '-plt', dest='plt', type=bool, default=False, required=False, nargs='?',
+parser.add_argument('--enable-plt', '-plt', action="store_true", dest='plt', default=False, required=False, 
                     help='Draw Call Graphs of External Functions like puts and printf in libc.')
-parser.add_argument('--file', '-f', dest='filename.s', metavar='entry file',required=True)
+parser.add_argument('--file', '-f', dest='file', metavar='filename.s', required=True, 
+                    help='Assembly File Name.')
 args = parser.parse_args()
 
 
