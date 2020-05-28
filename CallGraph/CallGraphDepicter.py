@@ -3,17 +3,54 @@ from CallGraph.utils.Queue import *
 from CallGraph.utils import getOriginFuncName, isPLT, isNotSTL
 
 
-def Drawer(entryPoint, symbolTable, bondMap, picName, DrawPLTFlag, DrawSTLFlag, drawer):
-    symbolCount = len(symbolTable)
-    if drawer == 'igraph':
-        import igraph
-        g = igraph.Graph(directed=True)
-        g.add_vertices(symbolCount)
-        g.vs['name'] = [getOriginFuncName(s) for s in symbolTable]
-    else:
-        import pygraphviz as pyg
-        g = pyg.AGraph()
-        g.add_node(getOriginFuncName(symbolTable[entryPoint]))
+def igraphDrawer(entryPoint, symbolTable, bondMap, picName, DrawPLTFlag, DrawSTLFlag):
+    import igraph
+    symbolCount = 1
+    originNameTable = [getOriginFuncName(s) for s in symbolTable]
+    g = igraph.Graph(directed=True)
+    visited = {}
+    q = queue()
+    q.push(entryPoint)
+    g.add_vertex('main')
+    while not q.empty():
+        callerID = q.front()
+        q.pop()
+        if callerID in visited:
+            continue
+        if not DrawPLTFlag and isPLT(symbolTable[callerID]) or not DrawSTLFlag and isNotSTL(symbolTable[callerID]):
+            continue
+        visited[callerID] = True
+        if str(callerID) not in bondMap:
+            continue
+        for calleeID in bondMap[str(callerID)]:
+            if not DrawPLTFlag and isPLT(symbolTable[calleeID]) or not DrawSTLFlag and isNotSTL(symbolTable[calleeID]):
+                continue
+
+            symbolCount += 1
+            if len(g.vs.select(name_eq=originNameTable[calleeID])) == 0:
+                g.add_vertex(originNameTable[calleeID])
+            g.add_edge(originNameTable[callerID], originNameTable[calleeID])
+            if calleeID not in visited:
+                q.push(calleeID)
+
+    picSize = 20 * symbolCount if symbolCount > 10 else 200
+    vertexColors = ['blue'] * symbolCount
+    vertexColors[0] = 'red'
+    style = {
+        'vertex_label': g.vs['name'],
+        'bbox': (0, 0, picSize, picSize),
+        'layout': g.layout('lgl'),
+        'vertex_color': vertexColors,
+        'vertex_label_dist': 1,
+        'margin': 30
+    }
+    igraph.plot(g, picName, **style)
+
+
+def Drawer(entryPoint, symbolTable, bondMap, picName, DrawPLTFlag, DrawSTLFlag):
+    import pygraphviz as pyg
+    g = pyg.AGraph()
+    g.add_node(getOriginFuncName(symbolTable[entryPoint]))
     visited = {}
     q = queue()
     q.push(entryPoint)
@@ -30,27 +67,11 @@ def Drawer(entryPoint, symbolTable, bondMap, picName, DrawPLTFlag, DrawSTLFlag, 
         for calleeID in bondMap[str(callerID)]:
             if not DrawPLTFlag and isPLT(symbolTable[calleeID]) or not DrawSTLFlag and isNotSTL(symbolTable[calleeID]):
                 continue
-            if drawer == 'igraph':
-                g.add_edge(int(callerID), int(calleeID))
-            else:
-                g.add_edge(getOriginFuncName(symbolTable[callerID]), getOriginFuncName(symbolTable[calleeID]))
+            g.add_edge(getOriginFuncName(symbolTable[callerID]), getOriginFuncName(symbolTable[calleeID]))
             if calleeID not in visited:
                 q.push(calleeID)
-    if drawer == 'igraph':
-        picSize = 20 * symbolCount
-        vertexColors = ['blue'] * symbolCount
-        vertexColors[entryPoint] = 'red'
-        style = {
-            'vertex_label': g.vs['name'],
-            'bbox': (0, 0, picSize, picSize),
-            'layout': g.layout('lgl'),
-            'vertex_color': vertexColors,
-            'vertex_label_dist': 1
-        }
-        igraph.plot(g, picName, **style)
-    else:
-        g.layout(prog='dot')
-        g.draw(picName)
+    g.layout(prog='dot')
+    g.draw(picName)
 
 
 def DrawPic(fileName, picName, DrawPLTFlag, DrawSTLFlag, drawer):
@@ -59,7 +80,10 @@ def DrawPic(fileName, picName, DrawPLTFlag, DrawSTLFlag, drawer):
     entryPoint = jsonObj['entryPoint']
     symbolTable = jsonObj['symbolTable']
     bondMap = jsonObj['bondMap']
-    Drawer(entryPoint, symbolTable, bondMap, picName, DrawPLTFlag, DrawSTLFlag, drawer)
+    if drawer == 'igraph':
+        igraphDrawer(entryPoint, symbolTable, bondMap, picName, DrawPLTFlag, DrawSTLFlag)
+    else:
+        Drawer(entryPoint, symbolTable, bondMap, picName, DrawPLTFlag, DrawSTLFlag)
 
 
 def Main():
