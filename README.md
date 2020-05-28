@@ -4,17 +4,17 @@ In order to complete the homework of Data Structure & Algorithm Course, among wh
 ### Supported Programming Language
 Only C/C++ is tested.
 ### Dependencies
-graphviz
+graphviz, python3-igraph
 
-python3, pygraphviz
+python3, pygraphviz, cairocffi 
 
 gcc, g++, c++filt (GNU compiler collection)
 
 How to install in Debian/Ubuntu:
 ```
 sudo apt update
-sudo apt install python3-dev graphviz-dev graphviz python3 python3-pip gcc g++
-sudo pip3 install pygraphviz
+sudo apt install python3-dev graphviz-dev graphviz python3 python3-pip python3-igraph gcc g++ libtool autoconf automake flex bison
+sudo pip3 install pygraphviz cairocffi
 sudo python3 setup.py install
 ```
 
@@ -40,6 +40,9 @@ optional arguments:
                         printf in libc.
   --file filename.s, -f filename.s
                         Assembly File Name.
+  --drawer {pygraphviz,igraph}, -d {pygraphviz,igraph}
+                        Specify a depicter to draw call graph. By default,
+                        callgraph uses pygraphviz.
 ```
 ### Examples
 [Examples->README.md](https://github.com/bjrjk/LinuxASMCallGraph/blob/master/examples/README.md)

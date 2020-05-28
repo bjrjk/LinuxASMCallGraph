@@ -1,11 +1,13 @@
-import json, sys
-from CallGraph.utils import symbolResolver
-from CallGraph.CallGraphDepicter import DrawPic
 import argparse
+import json
+
+from CallGraph.CallGraphDepicter import DrawPic
+from CallGraph.utils import symbolResolver
 
 assembleCode = []
 symbolTable = []
 bondMap = {}
+
 
 parser = argparse.ArgumentParser(usage='%(prog)s [options] -f <file>')
 parser.add_argument('--enable-stl', '-stl', action="store_true", dest='stl', default=False, required=False, 
@@ -14,6 +16,9 @@ parser.add_argument('--enable-plt', '-plt', action="store_true", dest='plt', def
                     help='Draw Call Graphs of External Functions like puts and printf in libc.')
 parser.add_argument('--file', '-f', dest='file', metavar='filename.s', required=True, 
                     help='Assembly File Name.')
+parser.add_argument('--drawer', '-d', dest='drawer', default='pygraphviz', choices=['pygraphviz', 'igraph'],
+                    help='Specify a depicter to draw call graph. By default, callgraph uses pygraphviz.')
+
 args = parser.parse_args()
 
 
@@ -42,18 +47,20 @@ def Main():
     global assembleCode
     PLTFlag = args.plt is not False
     STLFlag = args.stl is not False
-    fileName:str = args.file
+    fileName: str = args.file
     if not fileName.lower().endswith('.s'):
-        Help()
+        Help(fileName)
         exit(1)
     Input(fileName)
     Build()
     name = fileName[:-2]
     Generation(name + ".json")
-    DrawPic(name + ".json", name + ".png", PLTFlag, STLFlag)
+    DrawPic(name + ".json", name + ".png", PLTFlag, STLFlag, args.drawer)
 
 
-def Help():
+
+def Help(fileName):
+    print('Filename should end with \'.s\'. Your filename is: {}'.format(fileName))
     parser.print_help()
 
 
