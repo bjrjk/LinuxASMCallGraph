@@ -18,13 +18,14 @@ if (isset($_FILES["file"])) {
     $message = "";
     $STL = isset($_POST['STL']);
     $PLT = isset($_POST['PLT']);
+    $igraph = isset($_POST['igraph']);
     if ($extension != "zip") {
         $command = "g++ --std=c++17 -S \"$fullName.$extension\" -o \"$fullName.s\" 2>&1";
         exec($command,$message,$retCode);
         if($retCode != 0){
             die("g++ compiler error!");
         }
-        $command = "callgraph -f \"$fullName.s\"" . ($STL?" --enable-stl ":"") . ($PLT?" --enable-plt ":"") . " 2>&1";
+        $command = "callgraph -f \"$fullName.s\"" . ($STL?" --enable-stl ":"") . ($PLT?" --enable-plt ":"") . ($igraph?" -d igraph ":"") . " 2>&1";
         exec($command,$message,$retCode);
         if($retCode != 0){
             die("Script execution error!");
@@ -49,7 +50,7 @@ if (isset($_FILES["file"])) {
         if($retCode != 0){
             die("g++ compiler error!");
         }
-        $command = "callgraph -f \"$fullName/main.s\"" . ($STL?" --enable-stl ":"") . ($PLT?" --enable-plt ":"") . " 2>&1";
+        $command = "callgraph -f \"$fullName/main.s\"" . ($STL?" --enable-stl ":"") . ($PLT?" --enable-plt ":"") . ($igraph?" -d igraph ":"") . " 2>&1";
         exec($command,$message,$retCode);
         if($retCode != 0){
             die("Script execution error!");
@@ -96,6 +97,11 @@ if (isset($_FILES["file"])) {
             <label><input type="checkbox" class="form-control" name="PLT">Enable PLT</label>
             <br>
             <label>(Also Draw Call Graph of EXTERNAL functions in LIBC(Runtime Library))</label>
+        </div>
+        <div class="checkbox">
+            <label><input type="checkbox" class="form-control" name="igraph">Use igraph plotter</label>
+            <br>
+            <label>(Check to use python-igraph plotter, default pygraphviz)</label>
         </div>
         <input type="file" class="form-control" name="file" id="file">
         <br>
