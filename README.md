@@ -11,7 +11,7 @@ python3, pygraphviz, cairocffi
 gcc, g++, c++filt (GNU compiler collection)
 
 How to install in Debian/Ubuntu:
-```
+```bash
 sudo apt update
 sudo apt install python3-dev graphviz-dev graphviz python3 python3-pip python3-igraph gcc g++ libtool autoconf automake flex bison
 sudo pip3 install pygraphviz cairocffi
@@ -19,7 +19,7 @@ sudo python3 setup.py install
 ```
 
 ### Usage
-##### Current Version: 1.2
+##### Current Version: 1.3
 ##### Please generate your assembly file in Linux OS to get a better results.
 Use ```gcc -S [Your C Filename]``` or ```g++ -S [Your CPP Filename]``` to generate the assembly code for your high level programming language. 
 
@@ -51,11 +51,15 @@ optional arguments:
 You may visit [here](http://linuxasmcallgraph.renjikai.com/) .
 
 ### Deploy from Docker
-```
+```bash
 git clone https://github.com/bjrjk/LinuxASMCallGraph.git
 cd LinuxASMCallGraph
 docker-compose up
 ```
+
+### ChangeLog
+##### Version 1.3
+Added new depicter igraph by @Woodykaixa
 
 ### About
 This project will improve continuously. 
