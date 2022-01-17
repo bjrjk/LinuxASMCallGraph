@@ -1,6 +1,7 @@
 version: '2'
 services:
-  linuxasmcallgraph:
+  web:
     build: .
     ports:
       - "7777:80"
+    restart: always
