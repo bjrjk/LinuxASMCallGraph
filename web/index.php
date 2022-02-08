@@ -38,10 +38,10 @@ if (isset($_FILES["file"])) {
             die("Don't try to do bad! You tricky Linux hacker boy!");
         }
         $command = "unzip \"$fullName.zip\" -d \"$fullName\" | grep -P \".php|.htaccess\" 2>&1";
+		exec($command,$message,$retCode);
 		if(count($message)){
             die("Don't try to do bad! You tricky web hacker boy!");
         }
-        exec($command,$message,$retCode);
         if($retCode != 0){
             die("unzip error!");
         }
