@@ -32,12 +32,15 @@ if (isset($_FILES["file"])) {
         }
         header("Location:  tmp/$fileMD5.png");
     } else {
-        $command = "unzip -l \"$fullName.zip\" | grep php 2>&1";
+        $command = "zipinfo \"$fullName.zip\" | grep -P l[rwx-]{9} 2>&1";
         exec($command,$message,$retCode);
         if(count($message)){
-            die("Don't try to do bad things!");
+            die("Don't try to do bad! You tricky Linux hacker boy!");
         }
-        $command = "unzip \"$fullName.zip\" -d \"$fullName\" 2>&1";
+        $command = "unzip \"$fullName.zip\" -d \"$fullName\" | grep -P \".php|.htaccess\" 2>&1";
+		if(count($message)){
+            die("Don't try to do bad! You tricky web hacker boy!");
+        }
         exec($command,$message,$retCode);
         if($retCode != 0){
             die("unzip error!");
