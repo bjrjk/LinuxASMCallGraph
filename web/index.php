@@ -42,7 +42,7 @@ if (isset($_FILES["file"])) {
 		if(count($message)){
             die("Don't try to do bad! You tricky web hacker boy!");
         }
-        if($retCode != 0){
+        if($retCode != 1){
             die("unzip error!");
         }
         if (file_exists($fullName . '/main.cpp')) $extension = 'cpp';
