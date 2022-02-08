@@ -89,14 +89,14 @@ if (isset($_FILES["file"])) {
 	</div>
     <form method="post" enctype="multipart/form-data" role="form">
         <div class="checkbox">
-            <label><input type="checkbox" class="form-control" name="STL">Enable STL</label>
+            <label><input type="checkbox" class="form-control" name="STL">Draw STL Functions</label>
             <br>
             <label>(Also Draw Call Graph of functions in C++ Standard Library)</label>
         </div>
         <div class="checkbox">
-            <label><input type="checkbox" class="form-control" name="PLT">Enable PLT</label>
+            <label><input type="checkbox" class="form-control" name="PLT">Draw PLT Functions</label>
             <br>
-            <label>(Also Draw Call Graph of EXTERNAL functions in LIBC(Runtime Library))</label>
+            <label>(Also Draw Call Graph of EXTERNAL functions in PLT (IMPORT TABLE) )</label>
         </div>
         <div class="checkbox">
             <label><input type="checkbox" class="form-control" name="igraph">Use igraph plotter</label>
