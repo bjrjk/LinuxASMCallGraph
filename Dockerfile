@@ -1,7 +1,7 @@
 FROM php:7.2-apache
 RUN apt update
 RUN apt install -y python3-dev graphviz-dev graphviz python3 python3-pip python3-igraph gcc g++ cron unzip libtool autoconf automake flex bison libffi-dev
-RUN pip3 install pygraphviz cairocffi
+RUN pip3 install pygraphviz==1.7 cairocffi
 WORKDIR /var/www/html
 RUN rm -rf *
 COPY ./ /var/www/html
